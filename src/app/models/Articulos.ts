@@ -8,6 +8,7 @@ export class Articulos {
 
 
   constructor(nombre: string, categorias: string[], stock: number, precio: number, disponible: boolean) {
+
     this._nombre = nombre;
     this._categorias = categorias;
     this._stock = stock;

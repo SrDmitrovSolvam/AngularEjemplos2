@@ -2,6 +2,55 @@
   <h1 class="text-center">Artículos</h1>
   <hr>
 
+  <!--FORMULARIO-->
+  <div>
+    <!--Texto-->
+    <mat-form-field appearance="outline">
+      <!--Label-->
+      <mat-label>Título del input</mat-label>
+      <!--Input con placeholder e id (#)-->
+      <input matInput placeholder="Esto es un material input" maxlength="15" #input>
+      <!--Pista del input y contador-->
+      <mat-hint>Descripcion y/o contador {{input.value.length}}</mat-hint>
+      <!--Validacion-->
+      <mat-error>EL texto introducido no es correcto</mat-error>
+    </mat-form-field>
+
+    <!--Option-->
+    <mat-form-field appearance="outline">
+      <!--Label-->
+      <mat-label>Lista de items</mat-label>
+      <!--Campo de lista desplegable - se puede hacer multiple-->
+      <mat-select multiple>
+        <!--Un bucle genera la lista y el value permite mostrarlo después de seleccionarlo-->
+        <mat-option *ngFor="let cat of categoriasLista" [value]="cat">{{cat}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!--Checklist-->
+    <section>
+      <h4>Selecciona una o varias opciones</h4>
+      <p>
+        <mat-checkbox>opcion1</mat-checkbox>
+      </p>
+      <p>
+        <mat-checkbox >opcion2</mat-checkbox>
+      </p>
+      <p>
+        <mat-checkbox >opcion3</mat-checkbox>
+      </p>
+    </section>
+
+    <!--Radio Button-->
+    <mat-radio-group aria-label="Selecciona una opcion">
+      <mat-radio-button value="1">Option 1</mat-radio-button>
+      <mat-radio-button value="2">Option 2</mat-radio-button>
+    </mat-radio-group>
+
+
+  </div>
+
+  <hr>
   <!--Tabla de artículos-->
   <table class="table">
     <!--Nombres de columna-->
@@ -13,20 +62,46 @@
       <th scope="col">Stock</th>
       <th scope="col">Precio</th>
       <th scope="col">Disponible</th>
+      <th scope="col">Variante 1</th>
+      <th scope="col">Variante 2</th>
     </tr>
     </thead>
 
     <!--Filas de datos-->
+    <!--Se utiliza la directiva ngFor-->
     <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>MacBook pro M2</td>
-      <td>Informática</td>
-      <td>10</td>
-      <td>3.000€</td>
-      <td>Sí</td>
+    <tr *ngFor="let articulo of articulosLista; let id = index">
+      <th scope="row" [id]="id">{{id+1}}</th>
+      <td>{{articulo.nombre}}</td>
+      <!--<td>{{articulo.categorias}}</td>-->
+      <!--Esto crea una lista no numerada dentro del la columna Categoria-->
+      <td>
+        <ul>
+          <li *ngFor="let categoria of articulo.categorias">
+            <!--Esta variable está declarada justo arriba...-->
+            {{categoria}}
+          </li>
+        </ul>
+      </td>
+      <td>{{articulo.stock}}</td>
+      <td>{{articulo.precio}}</td>
+      <!--Switch-->
+      <td [ngSwitch]="articulo.disponible">
+        <p *ngSwitchCase="true">SI</p>
+        <p *ngSwitchCase="false">NO</p>
+        <p *ngSwitchDefault>Default</p>
+      </td>
+      <!--Modo 1 - Condición que solo mostrará el boton si el stock es mayor que 0-->
+      <td *ngIf="articulo.stock > 0">
+        <button class="btn btn-primary" type="button">Comprar</button>
+      </td>
+      <!--Modo 2 - Utilizando lógica de programacion-->
+      <td>
+        <button class="btn btn-primary" type="button" [disabled]="articulo.stock <= 0">Comprar</button>
+      </td>
     </tr>
-    <tr>
+
+    <!--<tr>
       <th scope="row">1</th>
       <td>MacBook pro M1</td>
       <td>Informática</td>
@@ -49,11 +124,17 @@
       <td>20</td>
       <td>900€</td>
       <td>Sí</td>
-    </tr>
+    </tr>-->
 
 
     </tbody>
   </table>
+
+  <!--Botones de actualizar lista-->
+  <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-4">
+    <button type="button" class="btn btn-success" (click)="addArticulo()">Añadir artículo</button>
+    <button type="button" class="btn btn-danger" (click)="removeArticulo()">Borrar artículo</button>
+  </div>
 
 
 </div>
