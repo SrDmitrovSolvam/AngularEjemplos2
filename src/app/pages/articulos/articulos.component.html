@@ -2,55 +2,176 @@
   <h1 class="text-center">Artículos</h1>
   <hr>
 
-  <!--FORMULARIO-->
+  <!--FORMULARIOS-->
   <div>
-    <!--Texto-->
-    <mat-form-field appearance="outline">
-      <!--Label-->
-      <mat-label>Título del input</mat-label>
-      <!--Input con placeholder e id (#)-->
-      <input matInput placeholder="Esto es un material input" maxlength="15" #input>
-      <!--Pista del input y contador-->
-      <mat-hint>Descripcion y/o contador {{input.value.length}}</mat-hint>
-      <!--Validacion-->
-      <mat-error>EL texto introducido no es correcto</mat-error>
-    </mat-form-field>
+    <!--    ########################################## -->
+    <h4>Formulario sin control y con FormControl</h4>
+    <div>
+      <!--Texto - ejemplo sin formcontrol-->
+      <mat-form-field appearance="outline">
+        <!--Label-->
+        <mat-label>Título del input</mat-label>
+        <!--Input con placeholder e id (#)-->
+        <input matInput placeholder="Esto es un material input" maxlength="15" #input>
+        <!--Pista del input y contador-->
+        <mat-hint>Descripcion y/o contador {{input.value.length}}</mat-hint>
+        <!--Validacion-->
+        <mat-error>EL texto introducido no es correcto</mat-error>
+      </mat-form-field>
 
-    <!--Option-->
-    <mat-form-field appearance="outline">
-      <!--Label-->
-      <mat-label>Lista de items</mat-label>
-      <!--Campo de lista desplegable - se puede hacer multiple-->
-      <mat-select multiple>
-        <!--Un bucle genera la lista y el value permite mostrarlo después de seleccionarlo-->
-        <mat-option *ngFor="let cat of categoriasLista" [value]="cat">{{cat}}</mat-option>
-      </mat-select>
-    </mat-form-field>
+      <!--Texto - ejemplo con FormControl-->
+      <mat-form-field appearance="outline">
+        <!--Label-->
+        <mat-label>Título del input</mat-label>
+        <!--Input asociado a un FormControl en TS-->
+        <input matInput placeholder="Esto es un material input" [formControl]="nombreForm">
+        <!--Pista del input y contador-->
+        <mat-hint>Descripcion y/o contador</mat-hint>
+        <!--Validacion controlada - hace referencia a los Validators. en TS-->
+        <mat-error *ngIf="nombreForm?.errors?.['email']">EL texto no es correcto</mat-error>
+        <mat-error *ngIf="nombreForm?.errors?.['required']">EL campo es obligatorio</mat-error>
+      </mat-form-field>
+      <p>{{nombreForm.value}}</p>
 
-    <!--Checklist-->
-    <section>
-      <h4>Selecciona una o varias opciones</h4>
-      <p>
-        <mat-checkbox>opcion1</mat-checkbox>
-      </p>
-      <p>
-        <mat-checkbox >opcion2</mat-checkbox>
-      </p>
-      <p>
-        <mat-checkbox >opcion3</mat-checkbox>
-      </p>
-    </section>
+      <!--Checklist-->
+      <section>
+        <h4>Selecciona una o varias opciones</h4>
+        <p>
+          <mat-checkbox>opcion1</mat-checkbox>
+        </p>
+        <p>
+          <mat-checkbox>opcion2</mat-checkbox>
+        </p>
+        <p>
+          <mat-checkbox>opcion3</mat-checkbox>
+        </p>
+      </section>
 
-    <!--Radio Button-->
-    <mat-radio-group aria-label="Selecciona una opcion">
-      <mat-radio-button value="1">Option 1</mat-radio-button>
-      <mat-radio-button value="2">Option 2</mat-radio-button>
-    </mat-radio-group>
+      <!--Radio Button-->
+      <mat-radio-group aria-label="Selecciona una opcion">
+        <mat-radio-button value="1">Option 1</mat-radio-button>
+        <mat-radio-button value="2">Option 2</mat-radio-button>
+      </mat-radio-group>
+      <br>
 
+      <!--Datepicker con rangos-->
+      <mat-form-field>
+        <mat-label>Datepicker con rangos</mat-label>
+        <!--Tiene que haber dos inputs-->
+        <mat-date-range-input [rangePicker]="range">
+          <input matStartDate>
+          <input matEndDate>
+        </mat-date-range-input>
+        <!--El botón del datepicker-->
+        <mat-datepicker-toggle matIconSuffix [for]="range"></mat-datepicker-toggle>
+        <!--Esto es la ventana del datepicker-->
+        <mat-date-range-picker #range></mat-date-range-picker>
+      </mat-form-field>
+    </div>
+    <hr>
 
+    <!--    ########################################## -->
+    <h4>Formulario con FormGroup</h4>
+    <!--La etiqueta form encierra un formulario de tipo FormGroup - la propiedad [formGroup] recibe el formulario (hecho con FormBuilder) declarado en TS y el submit llama a un método para guardar los datos de tdo el formulario-->
+    <form [formGroup]="formulario" (submit)="formData()">
+      <!--Texto - ejemplo con FormGroup-->
+      <mat-form-field appearance="outline">
+        <!--Label-->
+        <mat-label>Título del input</mat-label>
+        <!--Input asociado a la variable, dentro del FormBuilder, que hace referencia a él-->
+        <input matInput placeholder="Esto es un material input" formControlName="nombre">
+        <!--Pista del input y contador-->
+        <mat-hint>Descripcion y/o contador</mat-hint>
+        <!--Validacion controlada - hace referencia a los Validators. en TS-->
+        <mat-error *ngIf="formulario.get('nombre')?.errors?.['required']">Obligatorio</mat-error>
+      </mat-form-field>
+      <br>
+
+      <!--Option-->
+      <mat-form-field appearance="outline">
+        <!--Label-->
+        <mat-label>Lista de items</mat-label>
+        <!--Campo de lista desplegable - se puede hacer multiple-->
+        <mat-select multiple formControlName="option">
+          <!--Un bucle genera la lista y el value permite mostrarlo después de seleccionarlo-->
+          <mat-option *ngFor="let cat of categoriasLista" [value]="cat">{{cat}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+
+      <!--Datepicker-->
+      <mat-form-field>
+        <mat-label>Datepicker</mat-label>
+        <!--Esto es el input asociado al datepicker-->
+        <input matInput [matDatepicker]="picker" formControlName="fecha">
+        <!--El botón del datepicker-->
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <!--Esto es la ventana del datepicker-->
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <br>
+
+      <!--Esto submitea los datos del formulario-->
+      <div>
+        <button class="btn btn-success" type="submit">ENVIAR</button>
+      </div>
+
+    </form>
+    <hr>
+
+    <!--    ############################################## -->
+    <h4>Formulario "de verdad"</h4>
+    <form [formGroup]="formArticulo" (submit)="formDataArticulo()">
+      <!--Nombre-->
+      <mat-form-field appearance="outline" class="col-6">
+        <mat-label>Nombre</mat-label>
+        <input matInput placeholder="Nombre del artículo" formControlName="nombre">
+        <mat-hint></mat-hint>
+        <mat-error>EL texto no es correcto</mat-error>
+        <mat-error>EL campo es obligatorio</mat-error>
+      </mat-form-field>
+
+      <!--Categorias-->
+      <mat-form-field appearance="outline" class="col-6">
+        <mat-label>Categorias</mat-label>
+        <mat-select multiple formControlName="categorias">
+          <!--Un bucle genera la lista y el value permite mostrarlo después de seleccionarlo-->
+          <mat-option *ngFor="let cat of categoriasLista" [value]="cat">{{cat}}</mat-option>
+        </mat-select>
+        <mat-error>EL campo es obligatorio</mat-error>
+      </mat-form-field>
+
+      <!--Stock-->
+      <mat-form-field appearance="outline">
+        <mat-label>Stock</mat-label>
+        <input matInput placeholder="Stock" type="number" formControlName="stock" class="col-2">
+        <mat-error>EL campo es obligatorio</mat-error>
+      </mat-form-field>
+
+      <!--Precio-->
+      <mat-form-field appearance="outline">
+        <mat-label>Precio</mat-label>
+        <input matInput placeholder="Precio" type="number" formControlName="precio" class="col-2">
+        <mat-error>EL campo es obligatorio</mat-error>
+      </mat-form-field>
+
+      <!--Disponible-->
+      <mat-radio-group formControlName="disponible" class="col-4">
+        <mat-label>Disponible</mat-label>
+        <mat-radio-button [value]="true">Sí</mat-radio-button>
+        <mat-radio-button [value]="false">No</mat-radio-button>
+      </mat-radio-group>
+      <br>
+
+      <!--Esto submitea los datos del formulario-->
+      <div>
+        <button class="btn btn-success me-2" type="submit">ENVIAR</button>
+        <button class="btn btn-success me-2" type="button" (click)="updateArticulo()">MODIFICAR</button>
+      </div>
+    </form>
   </div>
-
   <hr>
+
   <!--Tabla de artículos-->
   <table class="table">
     <!--Nombres de columna-->
@@ -71,7 +192,7 @@
     <!--Se utiliza la directiva ngFor-->
     <tbody>
     <tr *ngFor="let articulo of articulosLista; let id = index">
-      <th scope="row" [id]="id">{{id+1}}</th>
+      <th scope="row" [id]="id">{{id + 1}}</th>
       <td>{{articulo.nombre}}</td>
       <!--<td>{{articulo.categorias}}</td>-->
       <!--Esto crea una lista no numerada dentro del la columna Categoria-->
@@ -92,12 +213,15 @@
         <p *ngSwitchDefault>Default</p>
       </td>
       <!--Modo 1 - Condición que solo mostrará el boton si el stock es mayor que 0-->
-      <td *ngIf="articulo.stock > 0">
+      <!--<td *ngIf="articulo.stock > 0">
         <button class="btn btn-primary" type="button">Comprar</button>
-      </td>
+      </td>-->
       <!--Modo 2 - Utilizando lógica de programacion-->
+      <!-- <td>
+         <button class="btn btn-primary" type="button" [disabled]="articulo.stock <= 0">Comprar</button>
+       </td>-->
       <td>
-        <button class="btn btn-primary" type="button" [disabled]="articulo.stock <= 0">Comprar</button>
+        <button class="btn btn-primary" type="button" (click)="modificarArticulo(articulo, id)">Modificar</button>
       </td>
     </tr>
 

@@ -22,6 +22,11 @@
           <!--El componente en cuestión implementa los métodos del módulo Router y permite la navegación con el método .navigate-->
           <a class="nav-link" (click)="navegarA()">Artículos</a>
         </li>
+
+        <!--Página 3 -->
+        <li class="nav-item" [routerLinkActive]="['active']">
+          <a class="nav-link" [routerLink]="['dialog']">Dialogs</a>
+        </li>
       </ul>
     </div>
   </div>

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Articulos} from "../../models/Articulos";
+import {FormBuilder, FormControl, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-articulos',
@@ -10,40 +11,45 @@ export class ArticulosComponent implements OnInit {
 
   articulosLista: Articulos[] = [];
   categoriasLista = ['Consolas', 'Portátiles', 'Informática', 'Tablets']
-  constructor() { }
+
+  //REACTIVE FORMS
+  //FormControl
+  //Esto se asocia a un input
+  nombreForm = new FormControl<String>(
+    //Valor por inicial
+    'ejemplo@correo.es',
+    //Validaciones - comprobacion de los datos
+    [Validators.required, Validators.email]
+  );
+
+  //FormGroup a partir de FormBuilder
+  formulario = this.fb.group({
+      nombre:
+        ['', //Valor inicial
+          [Validators.required] //Validacion - siempre entre []
+        ],
+      option: [[], Validators.required],
+      fecha: [new Date(), [Validators.required]]
+    }
+  );
+
+  //FORMULARIO REAL DE ARTICULO
+  formArticulo = this.fb.group({
+    nombre: ['', [Validators.required]],
+    categorias: [[''], [Validators.required]],
+    stock: [0, [Validators.required]],
+    precio: [0, [Validators.required]],
+    disponible: [false, [Validators.required]],
+  });
+
+  constructor(private fb: FormBuilder) {
+  }
 
   ngOnInit(): void {
-    //Al iniciar la pagina, se crea la lista
-    this.crearLista();
   }
 
   //Métodos
-  crearLista(): void {
-    const articulo1 = new Articulos(
-      'iPhone 14',
-      ['Telefonia','Informatica'],
-      300,
-      1200,
-      true
-    );
-    const articulo2 = new Articulos(
-      'iPad pro',
-      ['Tablets','Informatica'],
-      0,
-      900,
-      true
-    );
-
-    //Añade elementos a la lista
-    for (let i = 0; i < 2; i++) {
-      this.articulosLista.push(articulo1);
-      this.articulosLista.push(articulo2);
-    }
-    //La muestra por consola
-    console.table(this.articulosLista);
-  }
-
-  addArticulo():void {
+  addArticulo(): void {
     const articuloNuevo = new Articulos(
       'Nuevo',
       ['nuevo'],
@@ -57,4 +63,70 @@ export class ArticulosComponent implements OnInit {
   removeArticulo(): void {
     this.articulosLista.pop();
   }
+
+  formData() {
+    console.log(this.formulario.value)
+    //PASAR A JSON
+    let datosJSON = JSON.stringify(this.formulario.value);
+    console.log(datosJSON);
+    //... y POST a API
+  }
+
+  formDataArticulo() {
+    // Comprobar que el formulario es valido
+    if (this.formArticulo.valid) {
+      // Crear una nueva instancia a partir de los datos del form
+      let articulo: Articulos = new Articulos(
+        this.formArticulo.value.nombre!, //Puede ser null, por eso !
+        this.formArticulo.value.categorias!,
+        this.formArticulo.value.stock!,
+        this.formArticulo.value.precio!,
+        this.formArticulo.value.disponible!
+      )
+      console.log(articulo)
+      //Repercutir en la lista
+      this.articulosLista.push(articulo);
+
+      //Resetear valores del formulario - pone tdo a null
+      // this.formArticulo.reset(); - se tiene que hacer a mano
+      //this.formArticulo.patchValue(); - cambia uno o varios valores
+      this.formArticulo.setValue({
+        nombre: '',
+        categorias: [''],
+        stock: 0,
+        precio: 0,
+        disponible: true
+      })
+
+    }
+  }
+
+  id: number = 0;
+  modificarArticulo(a: Articulos, id: number) {
+    this.id = id;
+    // Pasar los valores que han llegado
+    this.formArticulo.setValue({
+      nombre: a.nombre,
+      categorias: a.categorias,
+      stock: a.stock,
+      precio: a.precio,
+      disponible: a.disponible
+    })
+  }
+
+  updateArticulo() {
+    // Crear una nueva instancia a partir de los datos del form
+    const articulo: Articulos = new Articulos(
+      this.formArticulo.value.nombre!, //Puede ser null, por eso !
+      this.formArticulo.value.categorias!,
+      this.formArticulo.value.stock!,
+      this.formArticulo.value.precio!,
+      this.formArticulo.value.disponible!
+    )
+    //Cambiar el articulo por el modificado
+    this.articulosLista[this.id] = articulo;
+  };
+
+
+
 }

@@ -15,6 +15,9 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatRadioModule} from "@angular/material/radio";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import { DialogComponent } from './pages/dialog/dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -23,19 +26,22 @@ import {MatRadioModule} from "@angular/material/radio";
     FooterComponent,
     HomeComponent,
     ArticulosComponent,
-    NotfoundComponent
+    NotfoundComponent,
+    DialogComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatCheckboxModule,
-    ReactiveFormsModule,
-    MatRadioModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatCheckboxModule,
+        ReactiveFormsModule,
+        MatRadioModule,
+        MatDatepickerModule,
+        MatNativeDateModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

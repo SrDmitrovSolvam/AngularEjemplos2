@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import {HomeComponent} from "./pages/home/home.component";
 import {ArticulosComponent} from "./pages/articulos/articulos.component";
 import {NotfoundComponent} from "./pages/notfound/notfound.component";
+import {DialogComponent} from "./pages/dialog/dialog/dialog.component";
 
 //Aquí se definen los componentes que tienen navegacion
 const routes: Routes = [
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'articulos',
     component: ArticulosComponent
+  },
+  {
+    path: 'dialog',
+    component: DialogComponent
   },
 
   //Recogedor de direcciones malas - SIEMPRE AL FINAL
