@@ -18,6 +18,11 @@ import {MatRadioModule} from "@angular/material/radio";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import { DialogComponent } from './pages/dialog/dialog/dialog.component';
+import {MatButtonModule} from "@angular/material/button";
+import { BasicDialogComponent } from './pages/dialog/basic-dialog/basic-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import { DataDialogComponent } from './pages/dialog/data-dialog/data-dialog.component';
+import { PipesComponent } from './pages/pipes/pipes.component';
 
 @NgModule({
   declarations: [
@@ -27,21 +32,26 @@ import { DialogComponent } from './pages/dialog/dialog/dialog.component';
     HomeComponent,
     ArticulosComponent,
     NotfoundComponent,
-    DialogComponent
+    DialogComponent,
+    BasicDialogComponent,
+    DataDialogComponent,
+    PipesComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSelectModule,
-        MatCheckboxModule,
-        ReactiveFormsModule,
-        MatRadioModule,
-        MatDatepickerModule,
-        MatNativeDateModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatButtonModule,
+    MatDialogModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

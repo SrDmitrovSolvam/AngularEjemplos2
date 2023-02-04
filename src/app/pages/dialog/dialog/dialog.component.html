@@ -1,1 +1,30 @@
-<p>dialog works!</p>
+<div class="container m-auto">
+  <h2>Dialogs</h2>
+  <hr>
+  <div class="row">
+    <!--Dialogo 1-->
+    <div class="col-6">
+      <h4 class="text-center">Dialogo básico reutilizable</h4>
+      <div class="m-auto">
+        <button mat-raised-button color="primary" (click)="openBasicDialog()">Abrir dialog</button>
+      </div>
+    </div>
+
+    <!--Dialogo 2-->
+    <div class="col-6">
+      <h4 class="text-center">Dialog con envio y recepcion de datos</h4>
+      <mat-form-field>
+        <mat-label>Título del dialogo:</mat-label>
+        <input matInput [formControl]="datosInput">
+      </mat-form-field>
+      <div class="m-auto">
+        <button mat-raised-button color="primary" (click)="openDataDialog()">Abrir dialog</button>
+      </div>
+      <!--Resultado del dialog-->
+      <h4>Resultado de los datos</h4>
+      <p>{{resultado}}</p>
+    </div>
+
+
+  </div>
+</div>
