@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>{{data}}</h2>
+<mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Qué le vamos a regalar a Dom?</mat-label>
+    <!--Aquí captura los datos introducidos-->
+    <input matInput [formControl]="regalo">
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <!--Aquí envía los datos al cerrar -->
+  <button mat-button (click)="onClick()">Método onClick</button>
+  <button mat-button [mat-dialog-close]="regalo.value" [disabled]="regalo.value == ''">mat-dialog-close</button>
+</mat-dialog-actions>
