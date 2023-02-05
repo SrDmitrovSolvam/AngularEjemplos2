@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +23,12 @@ import { BasicDialogComponent } from './pages/dialog/basic-dialog/basic-dialog.c
 import {MatDialogModule} from "@angular/material/dialog";
 import { DataDialogComponent } from './pages/dialog/data-dialog/data-dialog.component';
 import { PipesComponent } from './pages/pipes/pipes.component';
+import localeES from '@angular/common/locales/es'
+//Así se importa el locale del idioma
+import {DatePipe, registerLocaleData} from "@angular/common";
+import { PipePersonalizadoPipe } from './pages/pipes/custom/pipe-personalizado.pipe';
+//Así se registra
+registerLocaleData(localeES, 'es')
 
 @NgModule({
   declarations: [
@@ -35,7 +41,8 @@ import { PipesComponent } from './pages/pipes/pipes.component';
     DialogComponent,
     BasicDialogComponent,
     DataDialogComponent,
-    PipesComponent
+    PipesComponent,
+    PipePersonalizadoPipe
   ],
   imports: [
     BrowserModule,
@@ -52,7 +59,12 @@ import { PipesComponent } from './pages/pipes/pipes.component';
     MatButtonModule,
     MatDialogModule
   ],
-  providers: [],
+  providers: [
+    //Así se inyecta el locale español
+    {provide:LOCALE_ID, useValue:'es-ES'},
+    // Inyectar DatePipe
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

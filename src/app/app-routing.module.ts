@@ -4,6 +4,7 @@ import {HomeComponent} from "./pages/home/home.component";
 import {ArticulosComponent} from "./pages/articulos/articulos.component";
 import {NotfoundComponent} from "./pages/notfound/notfound.component";
 import {DialogComponent} from "./pages/dialog/dialog/dialog.component";
+import {PipesComponent} from "./pages/pipes/pipes.component";
 
 //Aquí se definen los componentes que tienen navegacion
 const routes: Routes = [
@@ -28,6 +29,10 @@ const routes: Routes = [
   {
     path: 'dialog',
     component: DialogComponent
+  },
+  {
+    path: 'pipes',
+    component: PipesComponent
   },
 
   //Recogedor de direcciones malas - SIEMPRE AL FINAL

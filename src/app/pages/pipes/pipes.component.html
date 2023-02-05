@@ -1,1 +1,48 @@
-<p>pipes works!</p>
+<div class="container">
+  <h2 class="text-center">Pipes</h2>
+  <hr>
+
+  <!--Pipe decimal-->
+  <div class="m-auto w-0">
+    <!--Se especifica que tipo de pipe es y sus propiedades-->
+    <p>Pipe decimal: {{decimal | currency:
+      'EUR':
+      'symbol':
+      '1.0-2':
+      'es'}}</p>
+  </div>
+
+  <!--Pipe number-->
+  <div class="m-auto w-0">
+    <p>Pipe numero: {{numero | number: '2.1-5': 'es'}}</p>
+  </div>
+
+  <!--Pipe text-->
+  <div class="m-auto w-0">
+    <!--La manera normal-->
+    <p>Pipe texto: {{texto.toUpperCase()}}</p>
+    <!--Usando pipes-->
+    <p>Pipe texto: {{texto | uppercase}}</p>
+    <p>Pipe texto: {{texto | lowercase}}</p>
+    <p>Pipe texto: {{texto | titlecase}}</p>
+  </div>
+
+  <!--Pipe date por html-->
+  <div class="m-auto w-0">
+    <p>Pipe fecha: {{fechaHTML | date: 'long': '': 'es'}}</p>
+  </div>
+  <!--Pipe date por TS-->
+  <div class="m-auto w-0">
+    <p>Pipe fecha: {{fechaTS}}</p>
+  </div>
+
+  <!--Pipe personalizado-->
+  <div class="m-auto w-0">
+    <p>Pipe personalizado: {{2 | pipePersonalizado: 2}}</p>
+  </div>
+
+
+
+
+
+</div>
