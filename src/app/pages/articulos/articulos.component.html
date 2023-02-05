@@ -222,6 +222,10 @@
        </td>-->
       <td>
         <button class="btn btn-primary" type="button" (click)="modificarArticulo(articulo, id)">Modificar</button>
+        <!--Navegacion por codigo TS-->
+        <button class="btn btn-primary" type="button" (click)="irADetalle(articulo, id)">Detalles TS</button>
+        <!--Navegacion por router link-->
+        <button class="btn btn-primary" type="button" [routerLink]="['/detail']" [state]="{articulo: articulo}">Detalles RouterLink</button>
       </td>
     </tr>
 

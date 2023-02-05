@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Articulos} from "../../models/Articulos";
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
+import {ArticulosService} from "../../services/articulos.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-articulos',
@@ -42,10 +44,22 @@ export class ArticulosComponent implements OnInit {
     disponible: [false, [Validators.required]],
   });
 
-  constructor(private fb: FormBuilder) {
+
+  constructor(private fb: FormBuilder, //Formularios
+              private articuloService: ArticulosService, //Servicio
+              private router: Router) //navegacion
+  {
   }
 
   ngOnInit(): void {
+    // Simulacion de llegada de datos de una API
+    this.articulosLista = this.articuloService.createArticulos()
+
+    // Comprobar llegada de datos - si existe el articulo que llega
+    if (this.articuloService.articulo != undefined) {
+      //introducirlo en la lista, reemplazando la posicion original
+      this.articulosLista[this.articuloService.posicion] = this.articuloService.articulo!;
+    }
   }
 
   //Métodos
@@ -128,5 +142,15 @@ export class ArticulosComponent implements OnInit {
   };
 
 
+  // Aquí se trabaja el servicio - importar primero con el constructor
+  irADetalle(articulo: Articulos, id: number) {
+    //Importar el servicio en el constructor
+    //Setear el articulo y la posicion
+    this.articuloService.articulo = articulo;
+    this.articuloService.posicion = id;
+    //Importar router en el constructor
+    //Navegar a la pagina de detalle
+    this.router.navigate(['detail']);
 
+  }
 }

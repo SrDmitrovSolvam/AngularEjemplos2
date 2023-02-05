@@ -27,6 +27,7 @@ import localeES from '@angular/common/locales/es'
 //Así se importa el locale del idioma
 import {DatePipe, registerLocaleData} from "@angular/common";
 import { PipePersonalizadoPipe } from './pages/pipes/custom/pipe-personalizado.pipe';
+import { ArticuloDetailComponent } from './pages/articulo-detail/articulo-detail.component';
 //Así se registra
 registerLocaleData(localeES, 'es')
 
@@ -42,7 +43,8 @@ registerLocaleData(localeES, 'es')
     BasicDialogComponent,
     DataDialogComponent,
     PipesComponent,
-    PipePersonalizadoPipe
+    PipePersonalizadoPipe,
+    ArticuloDetailComponent
   ],
   imports: [
     BrowserModule,
